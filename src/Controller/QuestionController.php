@@ -1,17 +1,18 @@
 <?php
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class QuestionController
+class QuestionController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/",name="app_homepage")
      */
     public function homepage()
     {
-        return new Response('Super Controller');
+        return $this->render('question/homepage.html.twig');
     }
 
     /**
@@ -19,6 +20,14 @@ class QuestionController
      */
     public function show($slug)
     {
-        return new Response('My question: '.$slug);
+        $answers = ["It's alive!",
+            "I don't know",
+            "uhhh"
+        ];
+        return $this->render('question/show.html.twig',[
+            "question"=>ucwords(str_replace('-',' ',$slug)).'?',
+            "answers"=>$answers
+            ]);
+        // return new Response('My question: '.$slug);
     }
 }
